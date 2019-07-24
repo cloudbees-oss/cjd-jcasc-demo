@@ -1,0 +1,457 @@
+jenkins:
+  agentProtocols:
+  - "JNLP2-connect"
+  - "JNLP4-connect"
+  - "Ping"
+  #TODO: Switch to Matrix Auth once 2.4 is in the envelope
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: false
+  disableRememberMe: false
+  globalNodeProperties:
+  - envVars:
+      env:
+      - key: "COMPANY_NAME"
+        value: "CloudBeers"
+  markupFormatter:
+    rawHtml:
+      disableSyntaxHighlighting: true
+  mode: NORMAL
+  myViewsTabBar: "standard"
+  numExecutors: 2
+  primaryView:
+    all:
+      name: "all"
+  projectNamingStrategy:
+    pattern:
+      description: "My naming strategy"
+      forceExistingJobs: false
+      namePattern: ".*"
+  quietPeriod: 5
+  remotingSecurity:
+    enabled: true
+  scmCheckoutRetryCount: 5
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+      - id: "admin"
+        password: "admin"
+  slaveAgentPort: 50000
+  systemMessage: "This is a demo CJD instance for Jenkins Configuration-as-Code"
+  updateCenter:
+    sites:
+    - id: "cap-cloudbees-jenkins-distribution"
+      url: "https://jenkins-updates.cloudbees.com/update-center/envelope-cloudbees-jenkins-distribution/update-center.json"
+    - id: "cloudbees-jenkins-distribution-offline"
+      url: "file:/var/jenkins_home/war/WEB-INF/plugins/update-center.json"
+  views:
+  - list:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "deployNowColumn"
+      - "favoriteColumn"
+      - "lastBuildPromotionStatusColumn"
+      includeRegex: ".*"
+      name: "My View 2"
+  - all:
+      name: "all"
+  viewsTabBar: "standard"
+  nodes:
+  - permanent:
+      labelString: "jnlp"
+      launcher:
+        jnlp:
+          workDirSettings:
+            disabled: false
+            failIfWorkDirIsMissing: false
+            internalDir: "remoting"
+      name: "Java Web Start Agent"
+      numExecutors: 1
+      retentionStrategy: "always"
+  - permanent:
+      launcher:
+        sSHLauncher:
+          credentialsId: "acmeuser-creds-id"
+          host: "myunixagents.acmecorp.com"
+          maxNumRetries: 5
+          port: 22
+          retryWaitTime: 30
+          sshHostKeyVerificationStrategy: "knownHostsFileKeyVerificationStrategy"
+      name: "SSH Build Agent - by SSH Slaves Plugin"
+      numExecutors: 2
+      retentionStrategy: "always"
+  - permanent:
+      labelString: "wmi"
+      launcher:
+        managedWindowsServiceLauncher:
+          account:
+            anotherUser:
+              password: "{AQAAABAAAAAQrFzG4eivzoRgjLSQ4b2EO+B/N4fMTAPWba9WXwrvVIM=}"
+              userName: "admin"
+          host: "mywindowshost.acmecorp.com"
+          password: "{AQAAABAAAAAQd9xCwocDRwcJ1cxFJjzXzoWM77CODd79aokmxCWR8rE=}"
+          userName: "ACMECORP/Admin"
+      name: "WMI Windows Agent"
+      numExecutors: 2
+      retentionStrategy: "always"
+  clouds:
+  - amazonEC2:
+      cloudName: "EC2-sample-config"
+      credentialsId: "acmecorp-aws"
+      privateKey: "Stub: EC2PrivateKey"
+      instanceCapStr: "8"
+      templates:
+      - ami: "windows64x"
+        amiType:
+          windowsData:
+            password: "{AQAAABAAAAAQtIAG0C6hQhDx3wnlr6dCxhrxfHkeVT2mQLWGnVh62Qo=}"
+            useHTTPS: false
+        associatePublicIp: false
+        connectBySSHProcess: false
+        deleteRootOnTermination: false
+        description: "Windows Slave"
+        ebsOptimized: false
+        idleTerminationMinutes: "30"
+        mode: NORMAL
+        monitoring: false
+        numExecutors: 1
+        remoteFS: "/remote/root"
+        stopOnTerminate: false
+        t2Unlimited: false
+        type: T3Nano
+        useDedicatedTenancy: false
+        useEphemeralDevices: false
+      useInstanceProfileForCredentials: false
+  - kubernetes:
+      connectTimeout: 5
+      containerCapStr: "10"
+      credentialsId: "acmeuser-creds-id"
+      jenkinsUrl: "http://localhost:8080"
+      maxRequestsPerHostStr: "32"
+      name: "kubernetes"
+      namespace: "acmecorp"
+      readTimeout: 15
+      serverCertificate: "Stub: Kubernetes server certificate key"
+      serverUrl: "https://k8s/acmecorp.com"
+      templates:
+      - containers:
+        - args: "cat"
+          command: "/bin/sh -c"
+          image: "jenkins/jnlp-slave"
+          livenessProbe:
+            failureThreshold: 1
+            initialDelaySeconds: 2
+            periodSeconds: 3
+            successThreshold: 4
+            timeoutSeconds: 5
+          name: "jnlp"
+          ttyEnabled: true
+        - args: "cat"
+          command: "/bin/sh -c"
+          image: "elasticsearch"
+          livenessProbe:
+            failureThreshold: 1
+            initialDelaySeconds: 2
+            periodSeconds: 3
+            successThreshold: 4
+            timeoutSeconds: 5
+          name: "elasticsearch"
+          ttyEnabled: true
+        instanceCap: 5
+        instanceCapStr: "5"
+        label: "linux stub"
+        name: "Test Pod"
+        namespace: "acmecorp"
+        workspaceVolume:
+          emptyDirWorkspaceVolume:
+            memory: false
+aws:
+  awsCredentials:
+    region: "us-east-1"
+  s3:
+    container: "s3.acmecorp.com"
+    prefix: "myjenkins/"
+credentials:
+  system:
+    domainCredentials:
+    - credentials:
+      - usernamePassword:
+          description: "Sample credentials of acmeuser"
+          id: "acmeuser-creds-id"
+          password: "{AQAAABAAAAAQ1/JHKggxIlBcuVqegoa2AdyVaNvjWIFk430/vI4jEBM=}"
+          scope: GLOBAL
+          username: "acmeuser"
+      - string:
+          description: "Secret Text Credentials"
+          id: "acmeuser-secret-text"
+          scope: GLOBAL
+          secret: "{AQAAABAAAAAQxuhfaykd2s1lucCuLUTqoxvb4JkekOIM1Iq2gsCUBbE=}"
+      - aws:
+          accessKey: "acmecorp-access-id"
+          description: "Acmecorp AWS credentials"
+          id: "acmecorp-aws"
+          scope: GLOBAL
+          secretKey: "{AQAAABAAAAAg2VHmB3ITxGN6robkgkhC9hMk+dD/DYRhmDfsShtKgNDFAUjKf0eXl7taORsKKgVq}"
+security:
+  apiToken:
+    creationOfLegacyTokenEnabled: false
+    tokenGenerationOnCreationEnabled: false
+    usageStatisticsEnabled: true
+  downloadSettings:
+    useBrowser: false
+  sSHD:
+    port: 1234
+unclassified:
+  bitbucketEndpointConfiguration:
+    endpoints:
+    - bitbucketCloudEndpoint:
+        enableCache: true
+        manageHooks: false
+        repositoriesCacheDuration: 60
+        teamCacheDuration: 120
+  contentFilters:
+    enabled: true
+  experimentalPlugins:
+    enabled: false
+  extendedEmailPublisher:
+    adminRequiredForTemplateTesting: true
+    allowUnregisteredEnabled: false
+    charset: "UTF-8"
+    debugMode: false
+    defaultBody: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:\r\n\r\nCheck\
+      \ console output at $BUILD_URL to view the results."
+    defaultContentType: "text/plain"
+    defaultRecipients: "users@acmecorp.com"
+    defaultSubject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!"
+    defaultSuffix: "@acmecorp.com"
+    maxAttachmentSize: -1
+    maxAttachmentSizeMb: 10
+    precedenceBulk: false
+    smtpServer: "smtp.acmecorp.com"
+    useSsl: false
+    watchingEnabled: false
+  gitHubConfiguration:
+    endpoints:
+    - apiUri: "https://api.github.acmecorp"
+      name: "Test GitHub Enterprise Server"
+  gitHubPluginConfig:
+    configs:
+    - name: "GitHub origin"
+    hookUrl: "http://localhost:8080/github-webhook/"
+  gitSCM:
+    createAccountBasedOnEmail: true
+    globalConfigEmail: "username@acmecorp.com"
+    globalConfigName: "username"
+  globalLibraries:
+    libraries:
+    - defaultVersion: "1.2.3"
+      name: "Test Git Lib"
+      retriever:
+        legacySCM:
+          scm:
+            git:
+              branches:
+              - name: "*/myprodbranch"
+              browser:
+                assemblaWeb:
+                  repoUrl: "assembla.acmecorp.com"
+              buildChooser: "default"
+              doGenerateSubmoduleConfigurations: false
+              extensions:
+              - "cleanCheckout"
+              - "gitLFSPull"
+              - checkoutOption:
+                  timeout: 60
+              - userIdentity:
+                  email: "customuser@acmecorp.com"
+                  name: "custom user"
+              - preBuildMerge:
+                  options:
+                    mergeRemote: "myrepo"
+                    mergeStrategy: RECURSIVE
+                    mergeTarget: "master"
+              gitTool: "Default"
+              submoduleCfg:
+              - submoduleName: "submodule-1"
+                branches:
+                - "mybranch-1"
+                - "mybranch-2"
+              - submoduleName: "submodule-2"
+                branches:
+                - "mybranch-3"
+                - "mybranch-4"
+              userRemoteConfigs:
+              - credentialsId: "acmeuser-creds-id"
+                url: "https://git.acmecorp/testgitlib.git"
+    # GitHub Source
+    - defaultVersion: "master"
+      name: "jenkins-pipeline-lib"
+      retriever:
+        modernSCM:
+          scm:
+            github:
+              id: "e43d6600-ba0e-46c5-8eae-3989bf654055"
+              repoOwner: "jenkins-infra"
+              repository: "pipeline-library"
+              traits:
+# BUG: https://issues.jenkins-ci.org/browse/JENKINS-57557
+#              - branchDiscoveryTrait:
+#                  strategyId: 1
+#              - originPullRequestDiscoveryTrait:
+#                  strategyId: 1
+#              - forkPullRequestDiscoveryTrait:
+#                  strategyId: 1
+#                  trust: "trustPermission"
+  jiraGlobalConfiguration:
+    sites:
+      - url: "https://issues.jenkins-ci.org"
+      - url: "http://jira.codehaus.org/"
+  location:
+    adminAddress: "address not configured yet <nobody@nowhere>"
+    url: "http://localhost:8080/"
+  mailer:
+    adminAddress: "address not configured yet <nobody@nowhere>"
+    charset: "UTF-8"
+    defaultSuffix: "@acmecorp.com"
+    smtpHost: "smtp.acmecorp.com"
+    useSsl: false
+  metricsAccessKey:
+    accessKeys:
+    - canHealthCheck: true
+      canMetrics: true
+      canPing: true
+      canThreadDump: false
+      description: "Dummy Key 1"
+      key: "oovyDNmeZZ1I7p_H_sXAws0KVP9eZ3fNwr7lOtjElKUId6wHAnlCR08wb6nAmLYa"
+      origins: "*"
+    - canHealthCheck: false
+      canMetrics: false
+      canPing: false
+      canThreadDump: true
+      description: "Dummy Key 2 for Thread dumps"
+      key: "lI2OHTJDi-G9AhmRE7roaPjHD5zrtKAGSeyVUqYpzA5DC_lhFAh13AF67iZYcvFP"
+      origins: "thread dumps"
+  pipeline-model:
+    dockerLabel: "docker"
+    registry:
+      url: "https://index.docker.io/v1/"
+  pollSCM:
+    pollingThreadCount: 10
+  shell:
+    shell: "bash"
+  globalConfigFiles:
+    configs:
+    - globalMavenSettings:
+        comment: "global settings"
+        content: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<settings xmlns=\"\
+          http://maven.apache.org/SETTINGS/1.0.0\" \n          xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\
+          \ \n          xsi:schemaLocation=\"http://maven.apache.org/SETTINGS/1.0.0\
+          \ http://maven.apache.org/xsd/settings-1.0.0.xsd\">\n  <servers>\n    <!--\
+          \ server -->\n  </servers>\n</settings>\n"
+        id: "2ec14627-7057-474e-b0af-d16ce92b0ea0"
+        isReplaceAll: true
+        name: "MyMavenSettingsFile"
+        providerId: "org.jenkinsci.plugins.configfiles.maven.GlobalMavenSettingsConfig"
+    - groovyTemplate:
+        content: "echo \"Hello!\""
+        id: "test-groovy-template"
+        name: "Groovy Email Template"
+    - custom:
+        content: "Whatever test content"
+        id: "test-custom-file"
+        name: "MyCustom"
+        providerId: "org.jenkinsci.plugins.configfiles.custom.CustomConfig"
+tool:
+  dockerTool:
+    installations:
+    - name: "docker-latest"
+      properties:
+      - installSource:
+          installers:
+          - docker:
+              version: "latest"
+    - home: "/tools/docker"
+      name: "docker-zip"
+      properties:
+      - installSource:
+          installers:
+          - zip:
+              label: "linux"
+              url: "https://storage.acmecorp.com/docker.zip"
+  git:
+    installations:
+    - home: "git"
+      name: "Default"
+    # BUG - https://issues.jenkins-ci.org/browse/JENKINS-57326
+    - home: "jgit"
+      name: "jgit"
+    - home: "jgitapache"
+      name: "jgitapache"
+  gradle:
+    installations:
+    - name: "Gradle-default"
+      properties:
+      - installSource:
+          installers:
+          - gradleInstaller:
+              id: "5.4"
+          - zip:
+              label: "arm"
+              subdir: "gradle-1.2.3/arm"
+              url: "https://share.acmecorp.com/tools/gradle/1.2.3"
+    - name: "Gradle-5.5.6"
+      properties:
+      - installSource:
+          installers:
+          - gradleInstaller:
+              id: "5.4"
+          - zip:
+              subdir: "gradle-5.5.6"
+              url: "https://share.acmecorp.com/tools/gradle/5.56"
+  jdk:
+    installations:
+    - name: "loca-jdk"
+      properties:
+      - installSource:
+          installers:
+          - command:
+              command: "echo \"Tool installation magic NOOP\""
+              label: "linux || windows"
+              toolHome: "/tools/jdk"
+  maven:
+    installations:
+    - name: "mvn-3.6.1"
+      properties:
+      - installSource:
+          installers:
+          - maven:
+              id: "3.6.1"
+  ant:
+    installations:
+    - name: "Ant 1.10.5"
+      # BUG: JENKINS-57561 - missing "home" export by default?
+      home: "/tools/ant"
+      properties:
+      - installSource:
+          installers:
+          - antFromApache:
+              id: "1.10.5"
+  msTestInstallation:
+    installations:
+    - defaultArgs: "test param"
+      home: "C:\\opt\\tools\\mstest"
+      name: "MSTest Tool"
+      omitNoIsolation: true
+  msbuild:
+    installations:
+    - defaultArgs: "helloWorld"
+      home: "C:\\opt\\tools\\msbuild"
+      name: "MSBuild Test"
