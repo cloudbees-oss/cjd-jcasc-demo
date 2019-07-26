@@ -1,5 +1,7 @@
 # JCasC Demo on CloudBees Jenkins Distribution
 
+![Docker Pulls](https://img.shields.io/docker/pulls/cloudbees/cjd-jcasc-demo?logo=cloudbees)
+
 | WARNING: This is a demo repository and image, it is not supported by CloudBees for production use |
 | --- |
 
@@ -13,14 +15,6 @@ The configuration YAML file presets all of the configuration fields which are cu
 Note, this is a demo only and it doesn't configure a full production instance of CJD which is able to run production CI/CD pipelines.
 
 ## Usage
-
-### Building the image
-
-* Ensure that Docker and Make are installed on your machine
-* Checkout the repository
-* Run `make build`
-
-It will produce a local `cloudbees/cjd-jcasc-demo:rolling` image.
 
 ### Running
 
