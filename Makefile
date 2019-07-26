@@ -17,5 +17,5 @@ run-devel:
 	mkdir work
 	docker run --rm -p 8080:8080 \
 		-e VERBOSE=true \
-		-v $(CURDIR)/work:/var/jenkins_home/ \
+		-v $(CURDIR)/work:/var/cloudbees-jenkins-distribution/ \
 		${IMAGE_DEVEL_TAG}
