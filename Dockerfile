@@ -13,7 +13,7 @@ RUN mkdir -p /usr/share/jenkins/ && ln -s /usr/share/cloudbees-jenkins-distribut
 USER cloudbees-jenkins-distribution
 
 # Startup all plugins included into the CloudBees Jenkins Distribution bundle
-ENV JAVA_OPTS "-Dcom.cloudbees.jenkins.cjp.installmanager.CJPPluginManager.allRequired=${INCLUDE_ALL_BUNDLED_PLUGINS}"
+ENV JAVA_OPTS "-Dcom.cloudbees.jenkins.cjp.installmanager.CJPPluginManager.allRequired=true"
 
 # Install extra plugins
 # REF_ROOT is consumed by jenkins-support in the https://github.com/jenkinsci/docker/issues/861 workaround
