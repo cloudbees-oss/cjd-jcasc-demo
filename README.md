@@ -18,7 +18,7 @@ Note, this is a demo only and it doesn't configure a full production instance of
 
 ### Running
 
-* Run the image using the `make run` command
+* Run the image using the `docker run --rm -p 8080:8080 cloudbees/cjd-jcasc-demo` command
 * Navigate to `http://localhost:8080`
 * Login with the _admin/admin_ username/password pair
 * **Register CloudBees Jenkins Distribution** screen.
