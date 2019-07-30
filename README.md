@@ -1,5 +1,7 @@
 # JCasC Demo on CloudBees Jenkins Distribution
 
+![Docker Pulls](https://img.shields.io/docker/pulls/cloudbees/cjd-jcasc-demo?logo=cloudbees)
+
 | WARNING: This is a demo repository and image, it is not supported by CloudBees for production use |
 | --- |
 
@@ -14,17 +16,9 @@ Note, this is a demo only and it doesn't configure a full production instance of
 
 ## Usage
 
-### Building the image
-
-* Ensure that Docker and Make are installed on your machine
-* Checkout the repository
-* Run `make build`
-
-It will produce a local `cloudbees/cjd-jcasc-demo:rolling` image.
-
 ### Running
 
-* Run the image using the `make run` command
+* Run the image using the `docker run --rm -p 8080:8080 cloudbees/cjd-jcasc-demo` command
 * Navigate to `http://localhost:8080`
 * Login with the _admin/admin_ username/password pair
 * **Register CloudBees Jenkins Distribution** screen.
