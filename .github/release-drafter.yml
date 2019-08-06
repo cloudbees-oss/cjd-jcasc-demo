@@ -1,0 +1,74 @@
+####
+# MIT License
+# 
+# Copyright (c) 2019 Jenkins contributors and CloudBees, Inc.
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+####
+
+# This file is based on https://github.com/jenkinsci/.github/blob/master/.github/release-drafter.yml used in the Jenkins project
+
+name-template: $NEXT_MINOR_VERSION
+tag-template: $NEXT_MINOR_VERSION
+version-template: $MAJOR.$MINOR
+
+# Emoji reference: https://gitmoji.carloscuesta.me/
+categories:
+  - title: 🚨 Removed
+    label: removed
+  - title: ⚠️ Deprecated
+    label: deprecated
+  - title: 🚀 New features and improvements
+    labels:
+      - enhancement
+      - feature
+  - title: 🐛 Bug Fixes
+    labels:
+      - bug
+      - fix
+      - bugfix
+      - regression  
+  - title: 📝 Documentation updates
+    label: documentation
+  # Default label used by Dependabot
+  - title: 📦 Dependency updates
+    label: dependencies
+  - title: 👻 Maintenance
+    label: chore
+  # TODO: consider merging category or changing emojis
+  - title: 🚦 Internal changes
+    label: internal
+  - title: 🚦 Tests
+    labels: 
+      - test
+      - tests
+exclude-labels:
+  - reverted
+  - no-changelog
+  - skip-changelog
+  - invalid
+
+template: |
+  <!-- Optional: add a release summary here -->
+  $CHANGES
+replacers:
+  - search: 'CJD'
+    replace: 'CloudBees Jenkins Distribution'
+  - search: 'JCasC'
+    replace: 'Jenkins Configuration-as-Code'
