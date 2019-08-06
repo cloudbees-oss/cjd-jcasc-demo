@@ -1,6 +1,8 @@
 FROM cloudbees/cloudbees-jenkins-distribution:2.176.2.3 as war_source
 
 FROM jenkins/jenkins:2.176.2
+
+# Replace jenkins.war by CloudBees Jenkins Distribution WAR which includes plugins from CloudBees Assurance Program and other features
 COPY --from=war_source /usr/share/cloudbees-jenkins-distribution/cloudbees-jenkins-distribution.war /usr/share/jenkins/jenkins.war
 
 # Startup all plugins included into the CloudBees Jenkins Distribution bundle
