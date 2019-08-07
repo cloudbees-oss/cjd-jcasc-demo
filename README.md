@@ -1,6 +1,7 @@
 # JCasC Demo on CloudBees Jenkins Distribution
 
-![Docker Pulls](https://img.shields.io/docker/pulls/cloudbees/cjd-jcasc-demo?logo=cloudbees)
+[![GitHub release](https://img.shields.io/github/release/cloudbees-oss/cjd-jcasc-demo.svg?label=release)](https://github.com/cloudbees-oss/cjd-jcasc-demo/releases/latest)
+[![Docker Pulls](https://img.shields.io/docker/pulls/cloudbees/cjd-jcasc-demo?logo=cloudbees)](https://hub.docker.com/r/cloudbees/cloudbees-jenkins-distribution)
 
 | WARNING: This is a demo repository and image, it is not supported by CloudBees for production use |
 | --- |
@@ -19,6 +20,7 @@ Note, this is a demo only and it doesn't configure a full production instance of
 ### Running
 
 * Run the image using the `docker run --rm -p 8080:8080 cloudbees/cjd-jcasc-demo` command
+  * You can also run a specific version using a release tag from [Docker Hub](https://hub.docker.com/r/cloudbees/cloudbees-jenkins-distribution)
 * Navigate to `http://localhost:8080`
 * Login with the _admin/admin_ username/password pair
 * **Register CloudBees Jenkins Distribution** screen.
@@ -39,3 +41,8 @@ Note, this is a demo only and it doesn't configure a full production instance of
 * Use `-e VERBOSE=true` to enable verbose mode with more debug information
 * It is possible to munt a local workspace as a volume by `-v ${WORKSPACE_ABOLUTE_PATH}:/var/jenkins_home/`
   for troubleshooting purposes. Note that the workspace should be empty on startup.
+  
+  ## Changelog
+  
+  See [GitHub Releases](https://github.com/cloudbees-oss/cjd-jcasc-demo/releases/latest).
+  
