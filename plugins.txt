@@ -1,4 +1,4 @@
-configuration-as-code:1.25
+configuration-as-code:1.27
 # https://issues.jenkins-ci.org/browse/JENKINS-57559
 credentials:2.2.0
 # https://issues.jenkins-ci.org/browse/JENKINS-57603
