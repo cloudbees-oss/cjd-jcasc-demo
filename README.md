@@ -1,7 +1,7 @@
 # JCasC Demo on CloudBees Jenkins Distribution
 
 [![GitHub release](https://img.shields.io/github/release/cloudbees-oss/cjd-jcasc-demo.svg?label=release)](https://github.com/cloudbees-oss/cjd-jcasc-demo/releases/latest)
-[![Docker Pulls](https://img.shields.io/docker/pulls/cloudbees/cjd-jcasc-demo?logo=cloudbees)](https://hub.docker.com/r/cloudbees/cloudbees-jenkins-distribution)
+[![Docker Pulls](https://img.shields.io/docker/pulls/cloudbees/cjd-jcasc-demo?logo=cloudbees)](https://hub.docker.com/r/cloudbees/cjd-jcasc-demo)
 
 | WARNING: This is a demo repository and image, it is not supported by CloudBees for production use |
 | --- |
