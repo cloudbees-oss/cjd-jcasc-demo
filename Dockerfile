@@ -1,4 +1,5 @@
-FROM jenkins/jenkins:2.176.2 as install_scripts_source
+# TODO: change the base image to an official one
+FROM jenkins4eval/jenkins:2.176.2-jdk8-a2d2c853f8a44895c940827159f6957ba55cb193 as install_scripts_source
 
 FROM cloudbees/cloudbees-jenkins-distribution:2.176.2.3
 COPY --from=install_scripts_source /usr/local/bin/jenkins-support /usr/local/bin/jenkins-support
