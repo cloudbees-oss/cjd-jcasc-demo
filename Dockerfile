@@ -1,18 +1,24 @@
-FROM cloudbees/cloudbees-jenkins-distribution:2.176.2.3 as war_source
+# TODO: change the base image to an official one
+FROM jenkins4eval/jenkins:2.176.2-jdk8-a2d2c853f8a44895c940827159f6957ba55cb193 as install_scripts_source
 
-FROM jenkins/jenkins:2.176.2
+FROM cloudbees/cloudbees-jenkins-distribution:2.176.2.3
+COPY --from=install_scripts_source /usr/local/bin/jenkins-support /usr/local/bin/jenkins-support
+COPY --from=install_scripts_source /usr/local/bin/install-plugins.sh /usr/local/bin/install-plugins.sh
 
-# Replace jenkins.war by CloudBees Jenkins Distribution WAR which includes plugins from CloudBees Assurance Program and other features
-COPY --from=war_source /usr/share/cloudbees-jenkins-distribution/cloudbees-jenkins-distribution.war /usr/share/jenkins/jenkins.war
+ENV JENKINS_UC http://jenkins-updates.cloudbees.com
+ENV JENKINS_INCREMENTALS_REPO_MIRROR https://repo.jenkins-ci.org/incrementals
+
+# Set the war
+ENV JENKINS_WAR /usr/share/cloudbees-jenkins-distribution/cloudbees-jenkins-distribution.war
 
 # Startup all plugins included into the CloudBees Jenkins Distribution bundle
 ENV JAVA_OPTS "-Dcom.cloudbees.jenkins.cjp.installmanager.CJPPluginManager.allRequired=true"
 
-# Install additional plugins including JCasC
-ENV JENKINS_UC http://jenkins-updates.cloudbees.com
-COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
-RUN bash /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
+# Install extra plugins
+ENV REF=/usr/share/cloudbees-jenkins-distribution/ref
+COPY plugins.txt $REF/plugins.txt
+RUN bash /usr/local/bin/install-plugins.sh < $REF/plugins.txt
 
-# Apply JCasC configuration
+# Apply JCasC
 COPY jenkins.yaml /cfg/jenkins.yaml
 ENV CASC_JENKINS_CONFIG /cfg/jenkins.yaml
