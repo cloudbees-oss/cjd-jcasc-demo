@@ -42,7 +42,7 @@ jenkins:
       - id: "admin"
         password: "admin"
   slaveAgentPort: 50000
-  systemMessage: "This is a demo CJD instance for Jenkins Configuration-as-Code"
+  systemMessage: "<h1><a href='https://www.cloudbees.com/products/cloudbees-jenkins-distribution'>CloudBees Jenkins Distribution</a> with <a href='https://jenkins.io/projects/jcasc/'>Configuration-as-Code</a></h1><br>Technical preview"
   updateCenter:
     sites:
     - id: "cap-cloudbees-jenkins-distribution"
