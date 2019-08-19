@@ -79,8 +79,8 @@ jenkins:
   - permanent:
       launcher:
         sSHLauncher:
-          credentialsId: "acmeuser-creds-id"
-          host: "myunixagents.acmecorp.com"
+          credentialsId: "exampleuser-creds-id"
+          host: "myunixagents.example.com"
           maxNumRetries: 5
           port: 22
           retryWaitTime: 30
@@ -96,16 +96,16 @@ jenkins:
             anotherUser:
               password: "{AQAAABAAAAAQrFzG4eivzoRgjLSQ4b2EO+B/N4fMTAPWba9WXwrvVIM=}"
               userName: "admin"
-          host: "mywindowshost.acmecorp.com"
+          host: "mywindowshost.example.com"
           password: "{AQAAABAAAAAQd9xCwocDRwcJ1cxFJjzXzoWM77CODd79aokmxCWR8rE=}"
-          userName: "ACMECORP/Admin"
+          userName: "EXAMPLE/Admin"
       name: "WMI Windows Agent"
       numExecutors: 2
       retentionStrategy: "always"
   clouds:
   - amazonEC2:
       cloudName: "EC2-sample-config"
-      credentialsId: "acmecorp-aws"
+      credentialsId: "example-aws"
       privateKey: "Stub: EC2PrivateKey"
       instanceCapStr: "8"
       templates:
@@ -133,14 +133,14 @@ jenkins:
   - kubernetes:
       connectTimeout: 5
       containerCapStr: "10"
-      credentialsId: "acmeuser-creds-id"
+      credentialsId: "exampleuser-creds-id"
       jenkinsUrl: "http://localhost:8080"
       maxRequestsPerHostStr: "32"
       name: "kubernetes"
-      namespace: "acmecorp"
+      namespace: "example"
       readTimeout: 15
       serverCertificate: "Stub: Kubernetes server certificate key"
-      serverUrl: "https://k8s/acmecorp.com"
+      serverUrl: "https://k8s/example.com"
       templates:
       - containers:
         - args: "cat"
@@ -169,7 +169,7 @@ jenkins:
         instanceCapStr: "5"
         label: "linux stub"
         name: "Test Pod"
-        namespace: "acmecorp"
+        namespace: "example"
         workspaceVolume:
           emptyDirWorkspaceVolume:
             memory: false
@@ -177,27 +177,27 @@ aws:
   awsCredentials:
     region: "us-east-1"
   s3:
-    container: "s3.acmecorp.com"
+    container: "s3.example.com"
     prefix: "myjenkins/"
 credentials:
   system:
     domainCredentials:
     - credentials:
       - usernamePassword:
-          description: "Sample credentials of acmeuser"
-          id: "acmeuser-creds-id"
+          description: "Sample credentials of exampleuser"
+          id: "exampleuser-creds-id"
           password: "{AQAAABAAAAAQ1/JHKggxIlBcuVqegoa2AdyVaNvjWIFk430/vI4jEBM=}"
           scope: GLOBAL
-          username: "acmeuser"
+          username: "exampleuser"
       - string:
           description: "Secret Text Credentials"
-          id: "acmeuser-secret-text"
+          id: "exampleuser-secret-text"
           scope: GLOBAL
           secret: "{AQAAABAAAAAQxuhfaykd2s1lucCuLUTqoxvb4JkekOIM1Iq2gsCUBbE=}"
       - aws:
-          accessKey: "acmecorp-access-id"
-          description: "Acmecorp AWS credentials"
-          id: "acmecorp-aws"
+          accessKey: "example-access-id"
+          description: "Example AWS credentials"
+          id: "example-aws"
           scope: GLOBAL
           secretKey: "{AQAAABAAAAAg2VHmB3ITxGN6robkgkhC9hMk+dD/DYRhmDfsShtKgNDFAUjKf0eXl7taORsKKgVq}"
 security:
@@ -229,18 +229,18 @@ unclassified:
     defaultBody: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:\r\n\r\nCheck\
       \ console output at $BUILD_URL to view the results."
     defaultContentType: "text/plain"
-    defaultRecipients: "users@acmecorp.com"
+    defaultRecipients: "users@example.com"
     defaultSubject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!"
-    defaultSuffix: "@acmecorp.com"
+    defaultSuffix: "@example.com"
     maxAttachmentSize: -1
     maxAttachmentSizeMb: 10
     precedenceBulk: false
-    smtpServer: "smtp.acmecorp.com"
+    smtpServer: "smtp.example.com"
     useSsl: false
     watchingEnabled: false
   gitHubConfiguration:
     endpoints:
-    - apiUri: "https://api.github.acmecorp"
+    - apiUri: "https://api.github.example.com"
       name: "Test GitHub Enterprise Server"
   gitHubPluginConfig:
     configs:
@@ -248,7 +248,7 @@ unclassified:
     hookUrl: "http://localhost:8080/github-webhook/"
   gitSCM:
     createAccountBasedOnEmail: true
-    globalConfigEmail: "username@acmecorp.com"
+    globalConfigEmail: "username@example.com"
     globalConfigName: "username"
   globalLibraries:
     libraries:
@@ -262,7 +262,7 @@ unclassified:
               - name: "*/myprodbranch"
               browser:
                 assemblaWeb:
-                  repoUrl: "assembla.acmecorp.com"
+                  repoUrl: "assembla.example.com"
               buildChooser: "default"
               doGenerateSubmoduleConfigurations: false
               extensions:
@@ -271,7 +271,7 @@ unclassified:
               - checkoutOption:
                   timeout: 60
               - userIdentity:
-                  email: "customuser@acmecorp.com"
+                  email: "customuser@example.com"
                   name: "custom user"
               - preBuildMerge:
                   options:
@@ -289,8 +289,8 @@ unclassified:
                 - "mybranch-3"
                 - "mybranch-4"
               userRemoteConfigs:
-              - credentialsId: "acmeuser-creds-id"
-                url: "https://git.acmecorp/testgitlib.git"
+              - credentialsId: "exampleuser-creds-id"
+                url: "https://git.example.com/testgitlib.git"
     # GitHub Source
     - defaultVersion: "master"
       name: "jenkins-pipeline-lib"
@@ -320,8 +320,8 @@ unclassified:
   mailer:
     adminAddress: "address not configured yet <nobody@nowhere>"
     charset: "UTF-8"
-    defaultSuffix: "@acmecorp.com"
-    smtpHost: "smtp.acmecorp.com"
+    defaultSuffix: "@example.com"
+    smtpHost: "smtp.example.com"
     useSsl: false
   metricsAccessKey:
     accessKeys:
@@ -385,7 +385,7 @@ tool:
           installers:
           - zip:
               label: "linux"
-              url: "https://storage.acmecorp.com/docker.zip"
+              url: "https://storage.example.com/docker.zip"
   git:
     installations:
     - home: "git"
@@ -406,7 +406,7 @@ tool:
           - zip:
               label: "arm"
               subdir: "gradle-1.2.3/arm"
-              url: "https://share.acmecorp.com/tools/gradle/1.2.3"
+              url: "https://share.example.com/tools/gradle/1.2.3"
     - name: "Gradle-5.5.6"
       properties:
       - installSource:
@@ -415,7 +415,7 @@ tool:
               id: "5.4"
           - zip:
               subdir: "gradle-5.5.6"
-              url: "https://share.acmecorp.com/tools/gradle/5.56"
+              url: "https://share.example.com/tools/gradle/5.56"
   jdk:
     installations:
     - name: "loca-jdk"
