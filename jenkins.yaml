@@ -391,10 +391,10 @@ tool:
     - home: "git"
       name: "Default"
     # BUG - https://issues.jenkins-ci.org/browse/JENKINS-57326
-    - home: "jgit"
-      name: "jgit"
-    - home: "jgitapache"
-      name: "jgitapache"
+    # - home: "jgit"
+    #   name: "jgit"
+    # - home: "jgitapache"
+    #   name: "jgitapache"
   gradle:
     installations:
     - name: "Gradle-default"
