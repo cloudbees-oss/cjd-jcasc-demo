@@ -250,6 +250,8 @@ unclassified:
     createAccountBasedOnEmail: true
     globalConfigEmail: "username@acmecorp.com"
     globalConfigName: "username"
+  globalDefaultFlowDurabilityLevel:
+    durabilityHint: PERFORMANCE_OPTIMIZED
   globalLibraries:
     libraries:
     - defaultVersion: "1.2.3"
