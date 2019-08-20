@@ -73,8 +73,11 @@ jenkins:
             disabled: false
             failIfWorkDirIsMissing: false
             internalDir: "remoting"
-      name: "Java Web Start Agent"
-      numExecutors: 1
+            workDirPath: "C:\\J\\AW"
+      name: "Inbound Agent (JNLP)"
+      nodeDescription: "Agent that initiates its own connection to Jenkins"
+      numExecutors: 3
+      remoteFS: "C:\\J\\AA"
       retentionStrategy: "always"
   - permanent:
       launcher:
